@@ -1,129 +1,91 @@
-import random
+import random  # Importa el módulo random para generar elecciones aleatorias de la computadora
 
-options = ("piedra", "papel", "tijera")
-rounds = 1
-computer_wins = 0
-user_wins = 0
-user2_wins = 0
+# Define las opciones posibles en el juego
+opciones = ('piedra', 'papel', 'tijera')
 
+# Inicializa las variables para controlar las rondas y los puntajes
+rondas = 1
+computadoraGana = 0
+usuarioGana = 0
+
+# Muestra un mensaje de bienvenida al usuario
 print("""
-      [🤖 Bienvenido al juego de Piedra, Papel o tijera para 3 personas🙋🙋]
-                  >>> Ingresa una opcion <<<
+      [  🤖  Bienvenido al juego Piedra, Papel o Tijera 🙋 ]
+                    >>> Ingresa una opción <<<
       """)
 
-while rounds < 4:
-    print("***" * 10)
-    print("ROUND", rounds)
-    print("***" * 10)
+# Inicia el bucle del juego que se repetirá hasta que se completen 3 rondas
+while rondas < 4:
+    print('***' * 10)  # Imprime separadores decorativos para distinguir las rondas
+    print('Round ', rondas)  # Muestra el número de la ronda actual
+    print('***' * 10)
 
-    print(f"""
-🤖 computer_wins: {computer_wins})
-🙋 user_wins: {user_wins})
-🙋 user2_wins: {user2_wins})
-    """)
+    # Muestra el puntaje actual antes de comenzar la ronda
+    print(f'''
+    Puntuacion
+    Computadora: {computadoraGana}
+    Usuario: {usuarioGana}
+          ''')
 
-    user_option = input(">>>User:piedra, papel o tijera => ").lower()
-    user2_option = input(">>>User2:piedra, papel o tijera => ").lower()
+    # Solicita al usuario que ingrese su elección y la convierte a minúsculas
+    opcionUsuario = input('>>> Piedra, papel o tijera => ').lower()
 
-    while user_option not in options or user2_option not in options or user_option and user2_option not in options:
-        print("Esas opciones son invalida")
-        user_option = input(">>>User: piedra, papel o tijera => ").lower()
-        user_option2 = input(">>>User2: piedra, papel o tijera => ").lower()
-        break
-    
-    computer_option = random.choice(options)
+    # Valida que la opción ingresada sea válida, en caso contrario solicita de nuevo la opción
+    while not opcionUsuario in opciones:
+        print('Esa opción no es valida')  # Muestra un mensaje de error si la opción no es válida
+        opcionUsuario = input('>>> Piedra, papel o tijera => ').lower()
 
-    print("User option = ", user_option)
-    print("User2 option = ", user2_option)
-    print("Computer option = ", computer_option)
+    # La computadora elige aleatoriamente una de las opciones usando el módulo random
+    opcionComputadora = random.choice(opciones)
 
-    if user_option == computer_option == user2_option:
-        print("Empate!\n")
+    # Muestra las elecciones de la computadora y del usuario
+    print('El usuario elije => ', opcionUsuario)
+    print('La computadora elije => ', opcionComputadora)
 
-    elif user_option == "piedra" and user2_option == "piedra" or user_option == "piedra" and computer_option == "piedra" or user2_option == "piedra" and computer_option == "piedra":
-
-        if computer_option == "papel":
-            print("Perdiste!\n")
-            computer_wins += 1
-        elif user2_option == "papel":
-            print("Ganaste!\n")
-            user2_wins += 1
-        elif user_option == "papel":
-            print("ganaste!\n")
-            user_wins += 1
+    # Compara las elecciones y determina el ganador de la ronda
+    if opcionUsuario == opcionComputadora:
+        print ("---" * 10)
+        print('Empate!\n')  # Caso de empate
+    elif opcionUsuario == 'piedra':
+        if opcionComputadora == 'tijera':
+            print('🪨 Piedra gana a tijera ✂️')
+            print ("---" * 10)
+            print('¡Usuario gana!\n')
+            usuarioGana += 1  # Suma un punto al usuario si gana la ronda
         else:
-            print("---" * 10)
-            print("Nadie gana!\n")
+            print('📄 Papel gana a piedra 🪨')
+            print ("---" * 10)
+            print('¡Computadora gana!\n')
+            computadoraGana += 1  # Suma un punto a la computadora si gana la ronda
+    elif opcionUsuario == 'papel':
+        if opcionComputadora == 'piedra':
+            print('📄 Papel gana a piedra 🪨')
+            print ("---" * 10)
+            print('¡Usuario gana!\n')
+            usuarioGana += 1
+        else: 
+            print('✂️ Tijera gana a papel 📄')
+            print ("---" * 10)
+            print('¡Computadora gana!\n')
+            computadoraGana += 1
+    elif opcionUsuario == 'tijera':
+        if opcionComputadora == 'papel':
+            print('✂️ Tijera gana a papel 📄')
+            print ("---" * 10)
+            print('¡Usuario gana!\n ')
+            usuarioGana += 1
+        else: 
+            print('🪨 Piedra gana a tijera ✂️')
+            print ("---" * 10)
+            print('¡Computer gana!\n ')
+            computadoraGana += 1
 
-    elif user_option == "papel" and user2_option == "papel" or user_option == "papel" and computer_option == "papel" or user2_option == "papel" and computer_option == "papel":
+    rondas += 1  # Incrementa el número de rondas después de cada ronda
 
-        if computer_option == "piedra":
-            print("📄 Empate de parte de dos usuarios y perdida de uno!🪨")
-            print("---" * 10)
-            print("¡Nadie gana!\n")
-        elif computer_option== "tijera":
-            print("✂️ Tijera gana a papel!📄\n")
-            computer_wins += 1
-        elif user2_option == "tijera":
-            print("✂️ Tijera gana a papel!📄\n")
-            user2_wins += 1
-        elif user_option == "tijera":
-            print("✂️ Tijera gana a papel!📄\n")
-            user_wins += 1
-
-    elif user_option == "tijera" and user2_option == "tijera" or user_option == "tijera" and computer_option == "tijera" or user2_option == "tijera" and computer_option == "tijera":
-        if computer_option == "papel":
-            print("✂️ Empate de parte de dos usuarios y perdida de uno!📄\n")
-            print("---" * 10)
-            print("¡Nadie gana!\n")
-            
-        elif computer_option == "piedra":
-            print("🪨 Piedra gana a tijera!✂️\n")
-            computer_wins += 1
-        elif user2_option == "piedra":
-            print("🪨 Piedra gana a tijera!✂️\n")
-            user2_wins += 1
-        elif user_option == "piedra":
-            print("🪨 Piedra gana a tijera!✂️\n")
-            user_wins += 1
-    else:
-        print("---" * 10)
-        print("Nadie gana.")    
-
-    rounds += 1
-
-if user2_wins < user_wins > computer_wins:
-    print(f"""
-🤖 computer_wins: {computer_wins})
-🙋 user_wins: {user_wins})
-🙋 user2_wins: {user2_wins})
-    """)
-    print("🎖El ganador es User🎖")
-    print(f"Puntaje: {user_wins}")
-    
-
-elif user2_wins < computer_wins > user_wins:
-    print(f"""
-🤖 computer_wins: {computer_wins})
-🙋 user_wins: {user_wins})
-🙋 user2_wins: {user2_wins})
-    """)
-    print("🎖El ganador es Computer🎖")
-    print(f"Puntaje: {computer_wins}")
-    
-elif computer_wins < user2_wins > user_wins:
-    print(f"""
-🤖 computer_wins: {computer_wins})
-🙋 user_wins: {user_wins})
-🙋 user2_wins: {user2_wins})
-    """)
-    print("🎖El ganador es Computer🎖")
-    print(f"Puntaje: {user2_option}")
-    
-else:
-    print("Empate")
-    print(f"""
-🤖 computer_wins: {computer_wins})
-🙋 user_wins: {user_wins})
-🙋 user2_wins: {user2_wins})
-    """)
+# Después de completar las 3 rondas, determina quién es el ganador final
+if usuarioGana > computadoraGana:
+    print('🎖️ El ganador es Usuario 🎖️')
+    print(f'Puntaje: {usuarioGana}')
+else: 
+    print('🎖️ El ganador es Computadora 🎖️')
+    print(f'Puntaje: {computadoraGana}')
